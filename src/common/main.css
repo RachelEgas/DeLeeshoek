@@ -1,0 +1,480 @@
+/* For mobile phones: */
+
+/* Variable declaration */
+/* Border box declaration */
+
+html {
+@maintitle box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-right: 0 !important;
+    overflow: hidden;
+    --first-font: "Permanent Marker", cursive;
+    --color1: #eee;
+    --color2: rgba(255, 255, 255, 0.8);
+    --color3: rgba(57, 157, 196, 1);
+    --color4: rgb(255, 233, 64);
+    --color5: rgba(255, 255, 255, 0.9);
+    --color6: rgba(129, 190, 214, 1);
+}
+
+/* inherit border-box on all elements in the universe and before and after */
+*,
+*:before,
+maintit *:after {
+    box-sizing: inherit;
+}
+
+body {
+    background: var(--color1);
+    background-size: 90px 179px;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.App {
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 20vmax 75vmax 5vmax;
+}
+
+.corner {
+    display: none;
+}
+
+.app-header {
+    background-color: var(--color2);
+    font-size: 1rem;
+    grid-column: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-title-container {
+    grid-column: 3;
+    margin: 0vmax 0em 0vmax 0vmax;
+    padding: 0vmax 1vmax;
+    align-self: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color3);
+    background: var(--color2);
+}
+
+.app-title {
+    margin: 0.5vmax 0rem 0.5vmax 0.5vmax;
+    letter-spacing: 1rem;
+    font-size: 4rem;
+    line-height: 70px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+.scoreboard-wrapper {
+    background-color: transparent;
+    font-size: 1rem;
+    grid-column: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scoreboard {
+    background-color: transparent;
+    font-size: 1rem;
+    grid-column: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scoreboard-score {
+    color: var(--color5);
+    text-align: center;
+    align-self: center;
+    font-size: 2em;
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 2vh;
+    margin-right: 1vh;
+    margin-left: 1vh;
+    margin-bottom: 0;
+    font-family: "Permanent Marker", cursive;
+}
+
+.scoreboard-found-words {
+    color: var(--color5);
+    text-align: center;
+    align-self: center;
+    font-size: 2em;
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 2vh;
+    margin-right: 1vh;
+    margin-left: 1vh;
+    margin-bottom: 0;
+    font-family: "Permanent Marker", cursive;
+}
+
+.scoreboard-words-left {
+    color: var(--color5);
+    text-align: center;
+    align-self: center;
+    font-size: 2em;
+    grid-column: 3;
+    grid-row: 1;
+    margin-top: 2vh;
+    margin-right: 1vh;
+    margin-left: 1vh;
+    margin-bottom: 0;
+    font-family: "Permanent Marker", cursive;
+}
+
+.timer {
+    text-align: center;
+    align-self: center;
+    font-size: 1.5em;
+    grid-column: 3;
+    grid-row: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: "Permanent Marker", cursive;
+}
+
+.scoreboard-start-button {
+    display: none;
+    grid-column: 1 / span 3;
+    grid-row: 2;
+    font-family: "Permanent Marker", cursive;
+    padding: 1vmax;
+    background: none;
+    color: var(--color5);
+    border-width: 0;
+    font-weight: bold;
+    font-size: 4rem;
+    margin: 2vmax 2vmax 2vmax 2vmax;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.scoreboard-surrender-button {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+    font-family: "Permanent Marker", cursive;
+    padding: 1vmax;
+    background: none;
+    color: var(--color5);
+    border-width: 0;
+    font-weight: bold;
+    font-size: 4rem;
+    margin: 2vmax 2vmax 2vmax 2vmax;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.scoreboard-instructions {
+    display: none;
+    margin-top: 2vmax;
+    font-family: "Permanent Marker", cursive;
+    font-size: 2.5rem;
+    color: var(--color5);
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 3;
+}
+
+.scoreboard-mobile-message {
+    /*  display: none;*/
+    margin-top: 2vmax;
+    font-family: "Permanent Marker", cursive;
+    font-size: 2.5rem;
+    color: var(--color5);
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 3;
+}
+
+#scrabble {
+    justify-self: start;
+    margin: 2vmax 2vmax 2vmax 4vmax;
+    text-align: center;
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    grid-column-start: 3;
+    grid-column-end: end;
+}
+
+.board-border {
+    position: relative;
+    width: 714px;
+    height: 500px;
+    border: 7px solid var(--color5);
+    border-radius: 30px;
+}
+
+.animated fadeInDown{
+    animation-duration: 1ms;
+    animation-fill-mode: both;
+}
+
+.board-square {
+    position: relative;
+    background-color: var(--color2);
+    width: 70px;
+    height: 70px;
+}
+
+.dragged-over {
+    background: var(--color2);
+}
+
+.tile {
+    position: absolute;
+    z-index: 2;
+    width: 70px;
+    height: 70px;
+    background: var(--color3);
+    cursor: move;
+    border-radius: 1px;
+    border-color: white;
+    box-shadow: 0.5px 0.5px 0 #bda259, 1px 1px 0 #bda259, 1.5px 1.5px 0 #bda259,
+    2px 2px 0 #bda259, 2.5px 2.5px 0 #bda259, 3px 3px 0 #bda259;
+}
+
+.is-dragging {
+    opacity: 0.7;
+}
+
+.is-established {
+    background: yellow;
+}
+
+.draggable {
+    cursor: move;
+}
+
+.tile-letter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: var(--color2);
+    font-size: 2.5rem;
+    line-height: 70px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.tile-points {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 5px;
+    height: 5px;
+    line-height: 5px;
+    text-align: center;
+    font-size: 1.25rem;
+    color: var(--color2);
+}
+
+.controls {
+    position: relative;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 2vmax;
+}
+
+.resultsmodal {
+}
+
+.resultsmodal-title {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--color2);
+    line-height: 6rem;
+}
+
+.resultsmodal-scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1;
+}
+.resultsmodal-subheader {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color2);
+}
+
+.resultsmodal-finalscore {
+    font-size: 2rem;
+    margin-bottom: 0;
+    font-weight: bold;
+    color: var(--color2);
+}
+
+.resultsmodal-body {
+    text-align: center;
+    padding: 0vmax 4vmax;
+}
+
+.resultsmodal-wordsfound {
+    font-family: var(--first-font);
+    font-size: 1.5em;
+}
+
+.resultsmodal-remainingwords {
+    font-family: var(--first-font);
+    font-size: 1.5em;
+}
+
+.resultsmodal-footer {
+    text-align: center;
+    padding: 1vmax 4vmax;
+}
+
+#resultsmodal-footer-button {
+    margin-top: 1vmax;
+    margin-bottom: 1vmax;
+    padding: 1vmax 2vmax;
+    transition: 0.25s ease-in-out;
+    background: #ffd959;
+    color: var(--color2);
+    border-width: 0;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 2vmax 2vmax 2vmax 2vmax;
+    cursor: pointer;
+}
+
+#resultsmodal-footer-button:focus {
+    outline: 0;
+}
+
+#resultsmodal-footer-button:hover {
+    transform: scale(1.1);
+    transition: 0.25s ease-in-out;
+}
+
+.footer {
+    grid-column: 1 / span 5;
+    display: grid;
+    align-items: center;
+}
+
+button {
+    padding: 1vmax;
+    transition: 0.25s ease-in-out;
+    background: #ffd959;
+    color: var(--color2);
+    border-width: 0;
+    margin: 2vmax 2vmax 2vmax 2vmax;
+    cursor: pointer;
+    box-shadow: 0.5px 0.5px 0 #bda259, 1px 1px 0 #bda259, 1.5px 1.5px 0 #bda259,
+    2px 2px 0 #bda259, 2.5px 2.5px 0 #bda259, 3px 3px 0 #bda259;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    transform: scale(1.25);
+    transition: 0.25s ease-in-out;
+}
+
+hr {
+    margin-top: 1vmax;
+    margin-bottom: 1vmax;
+}
+
+
+@media only screen and (min-width: 1023px) {
+    /* For desktop: */
+    .App {
+        text-align: center;
+        align-content: center;
+        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 20vmin 75vmin 5vmin;
+    }
+
+    .corner {
+        display: inline;
+    }
+
+    .app-header {
+        background-color: var(--color2);
+        font-size: 1rem;
+        grid-column: 1 / span 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .app-title-container {
+        grid-column: 3;
+        margin: 1vmax -1.2em 1vmax 2vmax;
+        padding: 0vmax 1vmax;
+        align-self: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--color3);
+        background: var(--color2);
+    }
+
+    .app-title {
+        margin: 0.5vmax -2rem 0.5vmax 0.5vmax;
+        letter-spacing: 4rem;
+        font-size: 6rem;
+        line-height: 70px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    #scrabble {
+        display: block;
+    }
+
+    .scoreboard-wrapper {
+        background-color: transparent;
+        font-size: 1rem;
+        grid-column: 1 / span 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .scoreboard-mobile-message {
+        display: none;
+    }
+
+    .scoreboard-start-button {
+        display: inline;
+    }
+
+    .scoreboard-instructions {
+        display: inline;
+    }
+}

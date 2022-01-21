@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Hearts from "./components/Hearts";
-import Github from "./components/Github";
+import Cat from "./components/Cat";
 import Satellite from "./components/Satellite";
 import Spider from "./components/Spider";
 import Flower from "./components/Flower";
@@ -53,7 +53,7 @@ export default () => {
       <div style={{position: 'relative'}}>
         <img src={images["house4.png"]} alt="house" />
         <Satellite />
-        <Github />
+        <Cat />
         <Spider img={images["spider.svg"]} />
         <Flower img={images["flower1.svg"]} />
       </div>

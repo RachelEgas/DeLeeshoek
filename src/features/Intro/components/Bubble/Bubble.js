@@ -47,14 +47,16 @@ export default props => {
 
   useChain([springRef, gamesRef], [selectedGame ? 0 : 2, selectedGame ? 0 : 3.25]);
 
+
   return (
     <Dialog>
       <animated.div style={{ position: "relative", ...propsBubble }}>
-        <Circular>Hey, where are we going?</Circular>
+        <Circular>Hey, waar gaan we heen?</Circular>
       </animated.div>
       <Games style={propsGames}>
-        <Game click={()=>selectGame('shop')} img={images["shop-game.svg"]} />
-        <Game click={()=>selectGame('puzzle')} img={images["puzzle-game.svg"]} />
+        <Game click={()=>selectGame('serie1')} img={images["serie-1.png"]} />
+        <Game click={()=>selectGame('serie2')} img={images["serie-2.png"]} />
+        <Game click={()=>selectGame('serie3')} img={images["serie-3.png"]} />
       </Games>
     </Dialog>
   );

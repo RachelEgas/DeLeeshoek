@@ -37,13 +37,6 @@ export default props => {
       </CarWithBubble>
       <Bottom>
         <div style={{display: "float"}}>
-          <img src={images["stars.svg"]} alt="github" style={{width: 20}} />Star me on <a href="http://github.com/pylnata/teddy">github</a>{" "}
-        </div>
-        <div style={{ fontSize: "1.7rem" }}>
-          Icons from{" "}
-          <a href="https://www.flaticon.com/" title="Flaticon">
-            www.flaticon.com
-          </a>
         </div>
       </Bottom>
     </>
