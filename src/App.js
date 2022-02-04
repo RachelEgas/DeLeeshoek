@@ -8,6 +8,7 @@ import Puzzle from "./features/Games/Puzzle/Puzzle";
 import { ImagesProvider } from "./contexts/ImagesContext";
 import Board from "./features/Games/Puzzle/Board";
 import bg from "./contexts/images/bg.png";
+import BookMenu from "./features/Menu/BookMenu";
 
 const Shop = React.lazy(() => {
   return import("./features/Shop/Shop");
@@ -69,9 +70,9 @@ const App = (props) => {
                             <Suspense fallback={""}>
                                 <Switch location={item}>
                                     <Route path="/serie1" exact render={props => (
-                                        <ImagesProvider
-                                            r={require.context("./contexts/images/", false, /\.(png|jpe?g|svg)$/)}>
-                                            <Puzzle {...props} />
+                                        <ImagesProvider {...props}
+                                            r={require.context("./features/Menu/images/", false, /\.(png|jpe?g|svg)$/)}>
+                                            <BookMenu timestamp={new Date().toString()} {...props} />
                                         </ImagesProvider>
                                     )}/>
                                     <Route path="/serie2" exact render={props => (

@@ -6,6 +6,7 @@ const NavSection = styled.div`
   width: 10%;
   color: #fff;
   font-size: 10rem;
+  margin-top: 60% !important;
 
   @media screen and (max-width: 320px) {
     display: none;
@@ -18,7 +19,7 @@ const NavSection = styled.div`
     font-size: 5rem;
   }
   opacity: 0.7;
-  padding: 1%;
+  padding: 5%;
   a,
   a:active,
   a:visited {

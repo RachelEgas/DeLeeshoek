@@ -44,7 +44,7 @@ class Board extends React.Component {
     renderTiles() {
         return this.props.tiles.map((tile, index) => {
             return (
-                <Tile tileClass={this.props.tileClass} justDropped={this.state.justDropped} key={index} onDrop={this.updateDroppedTilePosition} scoreHash={this.props.scoreHash}{...tile} />
+                <Tile tileClass={this.props.tileClass} justDropped={this.state.justDropped} key={index} onDrop={this.updateDroppedTilePosition} {...tile} />
             );
         });
     }
@@ -70,7 +70,7 @@ class Board extends React.Component {
 
     render() {
         let largestWordInDictionary = this.props.wordLength;
-
+        console.log(largestWordInDictionary)
         return (
             <MyContext.Consumer>
                 {context => (

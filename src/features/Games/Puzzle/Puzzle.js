@@ -8,12 +8,14 @@ import Board from "./Board";
 import Scoreboard from "./components/Scoreboard";
 import InitialState from "./InitialState.json";
 import Dictionary from "../../../common/dictionaries/Serie1Dictionary.json";
+import Win from "./Win";
+import {ImagesProvider} from "../../../contexts/ImagesContext";
 
 class Puzzle extends React.Component {
   constructor(props) {
     super(props);
 
-    let dictionary = Object.keys(Dictionary.line1);
+    let lineDictionary = Object.keys(Dictionary.lines[props.bookNumber-1]);
 
     this.state = (
         {
@@ -23,42 +25,41 @@ class Puzzle extends React.Component {
           tileClass: InitialState.tileClass,
           titleClass: InitialState.titleClass,
           title: InitialState.title,
-          randomWord: InitialState.randomWord,
-          dictionary: Dictionary.line1,
+          dictionary: Dictionary.lines[props.bookNumber-1],
           alphabet: InitialState.alphabet,
-          wordLength: Math.max(...(dictionary.map(el => el.length))),
+          wordLength: Math.max(...(lineDictionary.map(el => el.length))),
           startingBlock: InitialState.startingBlock,
           tiles: InitialState.tiles,
           startingTiles: InitialState.startingTiles,
-          score: InitialState.score,
           time: InitialState.time,
           matches: InitialState.matches,
-          remainingMatches: InitialState.remainingMatches,
+          remainingMatches: Object.keys(Dictionary.lines[props.bookNumber-1]),
           foundWords: InitialState.foundWords,
           timer: InitialState.timer,
           wordsToCheck: InitialState.wordsToCheck,
-          scoreHash: InitialState.scoreHash
+          completed: false
         }
     );
   }
 
   // set tiles at starting position
-  resetTilePositions = () => {
+  resetTilePositions = (word) => {
     let tiles = this.state.tiles;
-    tiles.length = this.state.wordLength;
-    for (let i = 0; i < this.state.wordLength; i++) {
+    tiles.length = word.length;
+    for (let i = 0; i < word.length; i++) {
       let temp = tiles;
-      console.log(temp[i]);
       temp[i].x = 3 + i;
       temp[i].y = 5;
-      this.setState({ tiles: temp });
+      this.setState({...this.state, tiles: temp });
     };
   };
 
   generateMatches = letters => {
+
     // get an array of all possible permutations
     let allPossible = this.getPermutationsAllLengths(letters.toLowerCase());
     let results = [];
+
     // check all posible permutations
     for (let i = 0; i < allPossible.length; i++) {
       if (this.state.dictionary.hasOwnProperty(allPossible[i])) {
@@ -66,8 +67,10 @@ class Puzzle extends React.Component {
       }
     }
     // filter out duplicates and sort by length
-    results = [...new Set(results)].sort((a, b) => b.length - a.length);
-    this.setState({ matches: results, remainingMatches: results });
+    // results = [...new Set(results)].sort((a, b) => b.length - a.length);
+    results = Object.keys(this.state.dictionary);
+
+    this.setState({...this.state, matches: results, remainingMatches: results });
     return results;
   };
 
@@ -109,7 +112,7 @@ class Puzzle extends React.Component {
 
   // play a sound
   playSound = sound => {
-    let audio = new Audio(`${sound}.mp3`);
+    let audio = new Audio(`${sound}`);
     audio.volume = 0.2;
     let playPromise = audio.play();
 
@@ -132,17 +135,19 @@ class Puzzle extends React.Component {
   // get ran
   // dom word from dictionary with length of n
   getNewDictionary = () => {
-    let dictionaries = Object.keys(Dictionary);
+    // let dictionaries = Object.keys(Dictionary);
+    let dictionaries = Dictionary.lines;
     let shuffledArray = this.shuffleArray(dictionaries);
-    return Dictionary[shuffledArray[0]];
+    // return Dictionary.lines[shuffledArray[0]];
+
+    return shuffledArray[0];
   };
 
   // get random word from dictionary with length of n
   getWordFromDictionary = lengthOfWord => {
     let words = Object.keys(this.state.dictionary);
-    console.log(words);
     let arrayOfNLengthStrings = words.filter(
-        word => word.length === lengthOfWord
+        word => !this.state.foundWords.includes(word)
     );
     let shuffledArray = this.shuffleArray(arrayOfNLengthStrings);
     return shuffledArray[0];
@@ -151,73 +156,34 @@ class Puzzle extends React.Component {
   // get a word
   getWord = () => {
     let wordLength = this.state.wordLength;
-    console.log(wordLength);
     let word = this.getWordFromDictionary(wordLength);
-    console.log(word);
-
+    console.log("chosen word: " + word);
     word = this.shuffleArray(word.split("")).join("");
-    this.setState({ randomWord: word });
     for (let i = 0; i < word.length; i++) {
+      console.log("letter: " +word[i]);
+      this.resetTiles();
       let temp = this.state.tiles;
       temp[i].letter = word[i].toUpperCase();
-      this.setState({ tiles: temp });
+      this.setState({...this.state, tiles: temp });
     }
     return word;
   };
 
-  // add score of word to total score
-  incrementScore = scoreOfWord => {
-    let newScore = this.state.score + scoreOfWord;
-    this.setState({ score: newScore });
-    this.checkVictoryConditions();
-  };
-
-  // end game if all matches are found
-  checkVictoryConditions = () => {
-    if (this.state.remainingMatches.length === 0) {
-      this.endGameLoop();
-    } else {
-      return;
-    }
-  };
-
-  // end gameloop
-  endGameLoop = () => {
-    this.setState({
-      isInGameLoop: false,
-      tiles: this.state.startingTiles
-    });
-    this.playSound("wood1");
-    this.handleShowResultsModal();
-  };
-
-  // display results modal
-  handleShowResultsModal = () => {
-    this.setState({ isModalDisplayed: true });
-  };
-
-  // score word
-  scoreWord = word => {
-    let letters = word.split("");
-    let result = 0;
-    for (let i = 0; i < letters.length; i++) {
-      result += this.state.scoreHash[letters[i]].points;
-    }
-    this.incrementScore(result);
-  };
-
   // start gameloop
   startGameLoop = () => {
-    let word = this.getWord();
-    this.resetTilePositions();
-    this.generateMatches(word);
-    this.setState({isInGameLoop: true, foundWords: [], score: 0});
-    this.playSound("woodshuffle");
+    let newWord = this.getWord();
+    console.log("new word: " + newWord);
+    this.resetTilePositions(newWord);
+    this.generateMatches(newWord);
+    this.setState({...this.state,isInGameLoop: true, foundWords: [], wordLength: newWord.length, word: newWord},
+        () => { console.log("length set to: "+ newWord.length + " word is: " + newWord);
+    });
+    this.playSound("woodshuffle.mp3");
   };
 
   // reset tiles to starting positions
   resetTiles = () => {
-    this.setState({ tiles: this.state.startingTiles });
+    this.setState({...this.state, tiles: this.state.startingTiles });
   };
 
   // check if word is a valid english word
@@ -231,45 +197,42 @@ class Puzzle extends React.Component {
 
   // check if word is a valid dutch word
   handleValidityCheck = (isValid, word) => {
-    if (isValid && !this.state.foundWords.includes(word) && word.length !== this.state.wordLength) {
+
+    if (isValid && !this.state.foundWords.includes(word) && this.state.remainingMatches.length > 1) {
       // if a valid word is found
-      this.scoreWord(word);
+      this.playSound("success.mp3");
       this.addWordToFoundWords(word);
-      this.playSound("minor-success");
+      this.startGameLoop();
+      this.addWordToFoundWords(word);
+
     } else if (
         isValid &&
         !this.state.foundWords.includes(word) &&
         word.length === this.state.wordLength
     ) {
       let newDictionary = this.getNewDictionary();
-      this.setState({dictionary: newDictionary}
+      this.setState({...this.state,dictionary: newDictionary}
           ,  () => { console.log(this.state.dictionary);
           });
 
       // if the longest word is found
-      this.scoreWord(word);
       this.addWordToFoundWords(word);
-      this.playSound("success");
-      // this.resetTilePositions();
-      // this.handleLongestWordFound();
-      this.startGameLoop();
-      this.setState({wordLength: Math.max(...(Object.keys(newDictionary).map(el => el.length)))}
-          ,  () => { console.log(this.state.wordLength);
-          });
+      this.playSound("cheering.wav");
+      this.setState({...this.state, completed:true});
     }
   };
 
   // if the longest word is found
   handleLongestWordFound = () => {
-    this.setState({ titleClass: "app-title animated tada" });
-    setTimeout(() => this.setState({ titleClass: "app-title" }), 1500);
+    this.setState({...this.state, titleClass: "app-title animated tada" });
+    setTimeout(() => this.setState({...this.state, titleClass: "app-title" }), 1500);
   };
 
   // add a word to FoundWords
   addWordToFoundWords = word => {
     let newFoundWords = this.state.foundWords;
     newFoundWords.push(word);
-    this.setState({ foundWords: newFoundWords });
+    this.setState({...this.state, foundWords: newFoundWords });
     this.removeFromRemaining(word);
   };
 
@@ -279,13 +242,8 @@ class Puzzle extends React.Component {
     let index = array.indexOf(word);
     if (index > -1) {
       array.splice(index, 1);
-      this.setState({ remainingMatches: array });
+      this.setState({...this.state, remainingMatches: array });
     }
-  };
-
-  // close results modal
-  handleCloseResultsModal = () => {
-    this.setState({ isModalDisplayed: false });
   };
 
   // check for words in matrix
@@ -293,12 +251,11 @@ class Puzzle extends React.Component {
     let capturedTiles = [];
     let tiles = this.state.tiles;
     for (let i = 0; i < tiles.length; i++) {
-      if (tiles[i].y === this.state.wordLength) {
+      if (tiles[i].y === 3) {
         capturedTiles.push(tiles[i]);
       }
     }
     let result = "";
-
     // sort by x position in matrix
     capturedTiles.sort((a, b) => {
       return a.x > b.x ? 1 : b.x > a.x ? -1 : 0;
@@ -327,27 +284,31 @@ class Puzzle extends React.Component {
 
   // update tile position
   updateTiles = stateTiles => {
-    this.setState({ tiles: stateTiles });
-    this.playSound("wood3");
+    this.setState({...this.state, tiles: stateTiles });
+    this.playSound("wood3.mp3");
   };
 
   render() {
+
     return (
         <MyContext.Consumer>
           {context => (
-              <GameHeader bg={context.state.bg} size="400px" filter="1">
+              this.state.completed ?
+                  <ImagesProvider {...this.props}
+                                  r={require.context("../../Menu/images/", false, /\.(png|jpe?g|svg)$/)}>
+                    <Win currentImage={this.props.currentImage}/>
+                  </ImagesProvider>
+                  :
+              <div>
                 <Scoreboard
                     isInGameLoop={this.state.isInGameLoop}
                     foundWords={this.state.foundWords}
-                    score={this.state.score}
                     remainingMatches={this.state.remainingMatches}/>
-                <Game style={{paddingRight: '23%'}}>
-                  <Nav type="back" to="/"/>
+                <Game>
                   <div>
                     <Board
                         tiles={this.state.tiles}
                         updateTiles={this.updateTiles}
-                        scoreHash={this.state.scoreHash}
                         isInGameLoop={this.state.isInGameLoop}
                         checkForWords={this.checkForWords}
                         tileClass={this.state.tileClass}
@@ -356,7 +317,7 @@ class Puzzle extends React.Component {
                     />
                   </div>
                 </Game>
-              </GameHeader>
+              </div>
           )}
         </MyContext.Consumer>
     );

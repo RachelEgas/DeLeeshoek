@@ -60,7 +60,6 @@ class Tile extends React.Component {
             connectDragSource(
                 <div className={this.props.tileClass} style={styles}>
                     <span className="tile-letter">{letter}</span>
-                    <span className="tile-points">{this.props.scoreHash[letter.toLowerCase()].points ? this.props.scoreHash[letter.toLowerCase()].points : 0}</span>
                 </div>
             )
         );
