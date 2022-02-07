@@ -19,6 +19,42 @@ if (window.screen.height <= 412) {
     height = 200;
 }
 
+export const Grid = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    user-select: none;
+    .board-square:nth-child(n + 35):nth-child(-n + ${({ wordLength }) => wordLength}) {
+        box-sizing: border-box;
+        border-bottom: 4px solid rgba(255, 255, 255, 0.9);
+        border-top: 4px solid rgba(255, 255, 255, 0.9);
+        background-color: rgba(129, 190, 214, 1);
+    };
+    .board-square:nth-child(2) {
+        box-sizing: border-box;
+        border-top-left-radius: 21px;
+    };
+    .board-square:nth-child(11) {
+        box-sizing: border-box;
+        border-top-right-radius: 21px;
+    };
+    .board-square:nth-child(62) {
+         box-sizing: border-box;
+         border-bottom-left-radius: 21px;
+    };
+    .board-square:nth-child(71) {
+        box-sizing: border-box;
+        border-bottom-right-radius: 21px;
+    };
+    .board-square:nth-child(35) {
+        box-sizing: border-box;
+        border-left: 4px solid var(--color5);
+    };   
+    .board-square:nth-child(${({ wordLength }) => wordLength}) {
+        box-sizing: border-box;
+        border-right: 4px solid var(--color5);
+    };
+`;
+
 export const WinContainer = styled.div`
   margin: 0 auto;
   width: ${height}px;

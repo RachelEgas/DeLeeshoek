@@ -36,9 +36,9 @@ const NavNext = styled(NavSection)`
   text-align: right;
 `;
 
-const Nav = ({ type, to }) => {
+const Nav = ({ resetBase, type, to }) => {
   const link = (
-    <Link to={to}>
+    <Link to={to}  onClick={() => {resetBase()}}>
       {type === "back" ? <>&larr;</> : <>&rarr;</>}
     </Link>
   );

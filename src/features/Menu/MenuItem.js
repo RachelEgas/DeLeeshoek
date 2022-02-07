@@ -1,6 +1,6 @@
 import React from "react";
 import {useImagesContext} from "../../contexts/ImagesContext";
-import {MenuItem} from "../../common/styles";
+import {StyledMenuItem} from "./styles";
 
 export default (props) => {
         const { images } = useImagesContext();
@@ -9,8 +9,8 @@ export default (props) => {
         const bookNumber = (s.match(/\d+/g) || []).map(n => parseInt(n));
 
         return (
-            <MenuItem onClick={() => {props.itemOnClick(bookNumber, props.src)}}>
+            <StyledMenuItem onClick={() => {props.itemOnClick(bookNumber, props.src)}}>
                 <img src={images[props.src.replace('./','')]} className="bookItem" />
-            </MenuItem>
+            </StyledMenuItem>
         );
     };

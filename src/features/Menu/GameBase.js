@@ -1,12 +1,11 @@
 import {MyContext} from "../../App";
-import {Game, GameHeader, Menu, Nav} from "../../common/styles";
+import {GameHeader, Menu} from "./styles";
+import {Nav} from "../../common/styles"
 import React from "react";
-import BookMenuItem from "./BookMenuItem";
+import MenuItem from "./MenuItem";
 import Puzzle from "../Games/Puzzle/Puzzle";
-import {WinContainer} from "../Games/Puzzle/styles";
-import {ImagesProvider} from "../../contexts/ImagesContext";
 
-class BookMenu extends React.Component {
+class GameBase extends React.Component {
     constructor(props) {
         super(props);
 
@@ -19,6 +18,10 @@ class BookMenu extends React.Component {
         );
     }
 
+    resetState = () => {
+        this.setState({bookChosen: false, bookNumber: null, currentImage: null})
+    }
+
     menuItemOnClick = (bookNumber,imgSrc) => {
         this.setState({
             bookChosen: true,
@@ -28,7 +31,7 @@ class BookMenu extends React.Component {
     }
 
     getAllFromDir = (r) => {
-        return r.keys().map((item, index) => <BookMenuItem itemOnClick={this.menuItemOnClick} key={index} src={item}></BookMenuItem>);
+        return r.keys().map((item, index) => <MenuItem itemOnClick={this.menuItemOnClick} key={index} src={item}></MenuItem>);
     };
 
     render() {
@@ -40,7 +43,7 @@ class BookMenu extends React.Component {
                 {context => (
                     <GameHeader bg={context.state.bg} size="400px" filter="1">
 
-                        <Nav type="back" to={this.state.bookChosen ? "/serie1":"/"}/>
+                        <Nav resetBase={this.resetState} type="back" to={this.state.bookChosen ? "/serie1":"/"}/>
                         {
                             this.state.bookChosen ?
                                     <Puzzle bookNumber={this.state.bookNumber} currentImage={this.state.currentImage}/>
@@ -53,4 +56,4 @@ class BookMenu extends React.Component {
         );
     }
 };
-export default BookMenu;
+export default GameBase;

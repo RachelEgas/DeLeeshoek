@@ -1,5 +1,5 @@
 import React from "react";
-import {useImagesContext} from "../../../contexts/ImagesContext";
+import {useImagesContext} from "../../contexts/ImagesContext";
 import {WinContainer} from "./styles";
 
 export default (props) => {

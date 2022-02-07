@@ -2,13 +2,13 @@ import React from "react";
 
 import { MyContext } from "../../../App";
 
-import { Game, Nav, GameHeader } from "../../../common/styles";
+import { Game } from "../../../common/styles";
 
 import Board from "./Board";
 import Scoreboard from "./components/Scoreboard";
 import InitialState from "./InitialState.json";
 import Dictionary from "../../../common/dictionaries/Serie1Dictionary.json";
-import Win from "./Win";
+import Win from "../Win";
 import {ImagesProvider} from "../../../contexts/ImagesContext";
 
 class Puzzle extends React.Component {
@@ -163,7 +163,7 @@ class Puzzle extends React.Component {
       console.log("letter: " +word[i]);
       this.resetTiles();
       let temp = this.state.tiles;
-      temp[i].letter = word[i].toUpperCase();
+      temp[i].letter = word[i].toLowerCase();
       this.setState({...this.state, tiles: temp });
     }
     return word;

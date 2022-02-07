@@ -33,7 +33,7 @@ export const Circular = styled.div`
   border: 1px solid rgb(226, 226, 226);
   border-radius: 30px;
   padding: 10px 15px;
-
+  font-family: Indie Flower;
   @media screen and (min-height: 1500px) {
     padding: 30px;
   }

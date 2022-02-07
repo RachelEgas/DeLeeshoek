@@ -4,11 +4,12 @@ import React from "react";
 import BoardSquare from "./components/BoardSquare.js";
 import Tile from "./components/Tile.js";
 
-import {HTML5Backend} from "react-dnd-html5-backend";
-import { DndProvider  } from "react-dnd";
+import { DndProvider  } from "react-dnd-multi-backend";
+import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
+// import { DndProvider  } from "react-dnd";
 import FlipMove from "react-flip-move";
 import { MyContext } from "../../../App";
-import { Grid } from "../../../common/styles";
+import { Grid } from "../styles";
 import helpers from "../../../helpers";
 
 const BOARD_WIDTH = 10;
@@ -74,7 +75,7 @@ class Board extends React.Component {
         return (
             <MyContext.Consumer>
                 {context => (
-                    <DndProvider backend={HTML5Backend}>
+                    <DndProvider options={ HTML5toTouch }>
                     <div id="scrabble">
                         <div className="board-border">
                                 <Grid wordLength={34+largestWordInDictionary}>
