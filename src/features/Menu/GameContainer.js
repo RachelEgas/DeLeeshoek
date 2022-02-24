@@ -3,9 +3,9 @@ import {GameHeader, Menu} from "./styles";
 import {Nav} from "../../common/styles"
 import React from "react";
 import MenuItem from "./MenuItem";
-import Puzzle from "../Games/Puzzle/Puzzle";
+import SpellGame from "../Games/Puzzle/SpellGame";
 
-class GameBase extends React.Component {
+class GameContainer extends React.Component {
     constructor(props) {
         super(props);
 
@@ -46,7 +46,7 @@ class GameBase extends React.Component {
                         <Nav resetBase={this.resetState} type="back" to={this.state.bookChosen ? "/serie1":"/"}/>
                         {
                             this.state.bookChosen ?
-                                    <Puzzle bookNumber={this.state.bookNumber} currentImage={this.state.currentImage}/>
+                                    <SpellGame bookNumber={this.state.bookNumber} currentImage={this.state.currentImage}/>
                                 :
                                 <Menu > {elements} </Menu>
                         }
@@ -56,4 +56,4 @@ class GameBase extends React.Component {
         );
     }
 };
-export default GameBase;
+export default GameContainer;

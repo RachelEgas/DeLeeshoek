@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "jest": "^24.8.0",
     "react-flip-move": "^3.0.4"
   }
 }

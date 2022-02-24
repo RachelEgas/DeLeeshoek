@@ -11,7 +11,7 @@ import Dictionary from "../../../common/dictionaries/Serie1Dictionary.json";
 import Win from "../Win";
 import {ImagesProvider} from "../../../contexts/ImagesContext";
 
-class Puzzle extends React.Component {
+class SpellGame extends React.Component {
   constructor(props) {
     super(props);
 
@@ -323,4 +323,4 @@ class Puzzle extends React.Component {
     );
   }
 };
-export default Puzzle;
+export default SpellGame;

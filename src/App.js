@@ -4,15 +4,11 @@ import { useTransition, animated } from "react-spring";
 
 import useRouter from "./hooks/useRouter";
 import Intro from "./features/Intro/Intro";
-import Puzzle from "./features/Games/Puzzle/Puzzle";
+import SpellGame from "./features/Games/Puzzle/SpellGame";
 import { ImagesProvider } from "./contexts/ImagesContext";
 import Board from "./features/Games/Puzzle/Board";
 import bg from "./contexts/images/bg.png";
-import GameBase from "./features/Menu/GameBase";
-
-const Shop = React.lazy(() => {
-  return import("./features/Shop/Shop");
-});
+import GameContainer from "./features/Menu/GameContainer";
 
 const MyContext = createContext({});
 
@@ -72,7 +68,7 @@ const App = (props) => {
                                     <Route path="/serie1" exact render={props => (
                                         <ImagesProvider {...props}
                                             r={require.context("./features/Menu/images/", false, /\.(png|jpe?g|svg)$/)}>
-                                            <GameBase timestamp={new Date().toString()} {...props} />
+                                            <GameContainer timestamp={new Date().toString()} {...props} />
                                         </ImagesProvider>
                                     )}/>
                                     <Route path="/serie2" exact render={props => (
@@ -87,36 +83,6 @@ const App = (props) => {
                                             <Board {...props} />
                                         </ImagesProvider>
                                     )}/>
-                                    <Route
-                                        path="/shop"
-                                        exact
-                                        render={props => (
-                                            <ImagesProvider
-                                                r={require.context(
-                                                    "./features/Shop/images/",
-                                                    true,
-                                                    /\.(png|jpe?g|svg)$/
-                                                )}
-                                            >
-                                                <Shop {...props} />
-                                            </ImagesProvider>
-                                        )}
-                                    />
-                                    <Route
-                                        path="/puzzle"
-                                        exact
-                                        render={props => (
-                                            <ImagesProvider
-                                                r={require.context(
-                                                    "./contexts/images/",
-                                                    false,
-                                                    /\.(png|jpe?g|svg)$/
-                                                )}
-                                            >
-                                                <Puzzle {...props} />
-                                            </ImagesProvider>
-                                        )}
-                                    />
                                     <Route
                                         path="/"
                                         exact
