@@ -5,8 +5,7 @@ import BoardSquare from "./components/BoardSquare.js";
 import Tile from "./components/Tile.js";
 
 import { DndProvider  } from "react-dnd-multi-backend";
-import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
-// import { DndProvider  } from "react-dnd";
+import HTML5toTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch';
 import FlipMove from "react-flip-move";
 import { MyContext } from "../../../App";
 import { Grid } from "../styles";
@@ -76,16 +75,16 @@ class Board extends React.Component {
             <MyContext.Consumer>
                 {context => (
                     <DndProvider options={ HTML5toTouch }>
-                    <div id="scrabble">
-                        <div className="board-border">
+                        <div id="scrabble">
+                            <div className="board-border">
                                 <Grid wordLength={34+largestWordInDictionary}>
                                     <FlipMove duration={1} staggerDelayBy={150}>
                                         {this.renderTiles()}
                                     </FlipMove>
                                     {this.renderBoardSquares()}
                                 </Grid>
+                            </div>
                         </div>
-                    </div>
                     </DndProvider>
                 )}
             </MyContext.Consumer>

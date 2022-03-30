@@ -1,6 +1,3 @@
-//some helper functions
-//Joshua Comeau
-
 /**
  * Array.prototype.swap
  * Rearrange an array to swap the positions of two elements.

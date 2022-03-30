@@ -10,7 +10,7 @@ export default (props) => {
 
         return (
             <StyledMenuItem onClick={() => {props.itemOnClick(bookNumber, props.src)}}>
-                <img src={images[props.src.replace('./','')]} className="bookItem" />
+                <img src={images[props.src.replace('./','')]} className="bookItem" alt="book" />
             </StyledMenuItem>
         );
     };

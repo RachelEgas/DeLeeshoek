@@ -4,7 +4,7 @@ import { MyContext } from "../../../App";
 
 import { Game } from "../../../common/styles";
 
-import Board from "./Board";
+import Board from "./Board.js";
 import Scoreboard from "./components/Scoreboard";
 import InitialState from "./InitialState.json";
 import Dictionary from "../../../common/dictionaries/Serie1Dictionary.json";
@@ -60,7 +60,7 @@ class SpellGame extends React.Component {
     let allPossible = this.getPermutationsAllLengths(letters.toLowerCase());
     let results = [];
 
-    // check all posible permutations
+    // check all possible permutations
     for (let i = 0; i < allPossible.length; i++) {
       if (this.state.dictionary.hasOwnProperty(allPossible[i])) {
         results.push(allPossible[i]);
@@ -132,8 +132,7 @@ class SpellGame extends React.Component {
     return array;
   };
 
-  // get ran
-  // dom word from dictionary with length of n
+  // get random word from dictionary
   getNewDictionary = () => {
     // let dictionaries = Object.keys(Dictionary);
     let dictionaries = Dictionary.lines;
@@ -143,8 +142,8 @@ class SpellGame extends React.Component {
     return shuffledArray[0];
   };
 
-  // get random word from dictionary with length of n
-  getWordFromDictionary = lengthOfWord => {
+  // get random word from dictionary that has not been found yet
+  getWordFromDictionary = () => {
     let words = Object.keys(this.state.dictionary);
     let arrayOfNLengthStrings = words.filter(
         word => !this.state.foundWords.includes(word)
@@ -155,12 +154,11 @@ class SpellGame extends React.Component {
 
   // get a word
   getWord = () => {
-    let wordLength = this.state.wordLength;
-    let word = this.getWordFromDictionary(wordLength);
-    console.log("chosen word: " + word);
+    let word = this.getWordFromDictionary();
+
     word = this.shuffleArray(word.split("")).join("");
     for (let i = 0; i < word.length; i++) {
-      console.log("letter: " +word[i]);
+
       this.resetTiles();
       let temp = this.state.tiles;
       temp[i].letter = word[i].toLowerCase();
@@ -170,7 +168,7 @@ class SpellGame extends React.Component {
   };
 
   // start gameloop
-  startGameLoop = () => {
+  startGameLoop = (playSound = true) => {
     let newWord = this.getWord();
     console.log("new word: " + newWord);
     this.resetTilePositions(newWord);
@@ -178,7 +176,10 @@ class SpellGame extends React.Component {
     this.setState({...this.state,isInGameLoop: true, foundWords: [], wordLength: newWord.length, word: newWord},
         () => { console.log("length set to: "+ newWord.length + " word is: " + newWord);
     });
-    this.playSound("woodshuffle.mp3");
+    if(playSound)
+    {
+      this.playSound("woodshuffle.mp3");
+    }
   };
 
   // reset tiles to starting positions
@@ -196,13 +197,16 @@ class SpellGame extends React.Component {
   };
 
   // check if word is a valid dutch word
-  handleValidityCheck = (isValid, word) => {
+  handleValidityCheck = (isValid, word, playSound = true) => {
 
     if (isValid && !this.state.foundWords.includes(word) && this.state.remainingMatches.length > 1) {
       // if a valid word is found
-      this.playSound("success.mp3");
+      if(playSound)
+      {
+        this.playSound("success.mp3");
+      }
       this.addWordToFoundWords(word);
-      this.startGameLoop();
+      this.startGameLoop(playSound);
       this.addWordToFoundWords(word);
 
     } else if (
@@ -217,7 +221,10 @@ class SpellGame extends React.Component {
 
       // if the longest word is found
       this.addWordToFoundWords(word);
-      this.playSound("cheering.wav");
+      if(playSound)
+      {
+        this.playSound("cheering.wav");
+      }
       this.setState({...this.state, completed:true});
     }
   };

@@ -4,9 +4,8 @@ import { useTransition, animated } from "react-spring";
 
 import useRouter from "./hooks/useRouter";
 import Intro from "./features/Intro/Intro";
-import SpellGame from "./features/Games/Puzzle/SpellGame";
 import { ImagesProvider } from "./contexts/ImagesContext";
-import Board from "./features/Games/Puzzle/Board";
+import Board from "./features/Games/Puzzle/Board.js";
 import bg from "./contexts/images/bg.png";
 import GameContainer from "./features/Menu/GameContainer";
 
@@ -47,7 +46,10 @@ class MyProvider extends React.Component {
 }
 
 const App = (props) => {
-  const { location } = useRouter();
+
+    // added default value to location because jest returns null on userRouter()
+  const { location } = useRouter() || { location: { pathname: '' } };
+  
   const transitions = useTransition(location, location => location.pathname, {
     from: {
       opacity: location.pathname !== "/" ? 0 : 1,
@@ -58,6 +60,8 @@ const App = (props) => {
   });
   return (
     <MyProvider>
+        <div style={{ display: 'none' }}>test header</div>
+
         <MyContext.Consumer>
             { (context) => (
                 <div>
